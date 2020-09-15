@@ -1,0 +1,16 @@
+.view-notes-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-notes-container .notes-content {
+    height: 100%;
+    font-size: large;
+    padding: 5px;
+    overflow-y: auto;
+}
+
+.view-notes-container .notes-created {
+    margin-top: 5px;
+}

@@ -1,0 +1,25 @@
+.nav {
+    margin-bottom: 15px;
+}
+
+.nav .logo img {
+    vertical-align: middle;
+    padding-bottom: 5px;
+}
+
+.nav .logo span {
+    vertical-align: middle;
+}
+
+.nav .navlink {
+    color: white;
+}
+
+.nav .logo a.logolink:hover {
+    text-decoration: none;
+}
+
+.nav .buttons {
+    margin-left: auto;
+    vertical-align: middle;
+}
