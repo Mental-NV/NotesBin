@@ -1,18 +1,33 @@
-import React, { useEffect } from 'react';
-import '../components/ViewNotesPanel';
+import React, { useState, useEffect } from 'react';
 import ViewNotesPanel from '../components/ViewNotesPanel';
-import { getUrlParam, loadAllNotes } from '../Utils';
 import { Typography } from '@material-ui/core';
+import LoadingPanel from '../components/LoadingPanel';
+import { getUrlParam } from '../Utils';
 
 function ViewNotes(props) {
     useEffect(() => {
         document.title = "NotesBin - View notes";
-    });
-    let id = parseInt(getUrlParam("id"));
-    let notes;
-    if (!isNaN(parseInt(id))) {
-        let allNotes = loadAllNotes();
-        [notes] = allNotes.filter(x => x.id === id);
+    }, []);
+
+    let [notes, setNotes] = useState(null);
+    let [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        let id = parseInt(getUrlParam("id"));
+        if (isNaN(parseInt(id))) {
+            setLoading(false);
+            return;
+        }
+        fetch(`/api/notes/${id}`)
+            .then(r => r.json())
+            .then(notes => {
+                setNotes(notes);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return <LoadingPanel />;
     }
     if (!notes) {
         return (

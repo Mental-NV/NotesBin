@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import CreateNotesPanel from '../components/CreateNotesPanel';
-import { saveNotes } from '../Utils';
+import LoadingPanel from '../components/LoadingPanel';
 
 function CreateNotes(props) {
     let [content, setContent] = useState(null);
     let [title, setTitle] = useState(null);
     let [redirect, setRedirect] = useState(null);
+    let [loading, setLoading] = useState(false);
 
     useEffect(() => {
         document.title = "NotesBin - Create notes";
-    });
+    }, []);
 
     if (redirect) {
         return (<Redirect to={redirect} />);
+    }
+
+    if (loading) {
+        return <LoadingPanel />;
     }
 
     return (
@@ -31,10 +36,28 @@ function CreateNotes(props) {
                     alert("Content is required");
                     return;
                 }
-                let id = saveNotes(title, content);
-                if (id) {
-                    setRedirect(`/view?id=${id}`);
-                }
+
+                setLoading(true);
+
+                fetch(`/api/notes`, {
+                    method: 'POST',
+                    body: JSON.stringify({ title, content }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }})
+                    .then(r => {
+                        if (!r.ok) {
+                            throw new Error(r.statusText);
+                        }
+                        return r.json();
+                    })
+                    .then(result => {
+                        setLoading(false);
+                        setRedirect(`/view?id=${result.id}`);
+                    })
+                    .catch(error => {
+                        throw new Error(error);
+                    });
             }} 
         />
     );

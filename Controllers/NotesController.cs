@@ -8,7 +8,6 @@
     using NotesBin.Interfaces;
     using NotesBin.Models;
 
-
     [Route("api/[controller]")]
     [ApiController]
     public class NotesController : ControllerBase
@@ -20,21 +19,21 @@
             this.notesDataSource = notesDataSource;
         }
 
-        // GET: api/<NotesController>
+        // GET: api/Notes
         [HttpGet]
         public async Task<IEnumerable<NotesModel>> Get()
         {
             return await notesDataSource.GetAllAsync();
         }
 
-        // GET api/<NotesController>/5
+        // GET api/Notes/5
         [HttpGet("{id}")]
         public async Task<NotesModel> Get(long id)
         {
             return await notesDataSource.GetAsync(id);
         }
 
-        // POST api/<NotesController>
+        // POST api/Notes
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] NotesModel entry)
         {
