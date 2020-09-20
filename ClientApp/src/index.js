@@ -15,6 +15,11 @@ const ListNotes = React.lazy(() => import('./routes/listnotes'));
 const NotFound404 = React.lazy(() => import('./routes/notfound404'));
 
 function App(props) {
+    const api_regex = /^\/api\/.*/;
+    // if using "/api/" in the pathname, don't use React Router
+    if (api_regex.test(window.location.pathname)) {
+        return <div />; // must return at least an empty div
+    }
     return (
         <Router>
             <NavBar />

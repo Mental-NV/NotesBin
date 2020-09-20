@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NotesBin.Interfaces;
+using NotesBin.Services;
 
 namespace NotesBin
 {
@@ -22,6 +24,7 @@ namespace NotesBin
         {
 
             services.AddControllersWithViews();
+            services.AddSingleton<INotesDataSource, NotesDataSource>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -52,9 +55,7 @@ namespace NotesBin
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
 
             app.UseSpa(spa =>
