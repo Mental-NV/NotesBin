@@ -19,9 +19,17 @@ function ViewNotes(props) {
             return;
         }
         fetch(`/api/notes/${id}`)
-            .then(r => r.json())
+            .then(r => {
+                if (r.ok) {
+                    return r.json();
+                }
+                throw new Error(r.statusText);
+            })
             .then(notes => {
                 setNotes(notes);
+                setLoading(false);
+            })
+            .catch(error => {
                 setLoading(false);
             });
     }, []);
@@ -31,7 +39,7 @@ function ViewNotes(props) {
     }
     if (!notes) {
         return (
-            <Typography>Notes not found</Typography>
+            <Typography variant='h2'>The notes not found</Typography>
         );
     }
     return (

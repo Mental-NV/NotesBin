@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.InteropServices.ComTypes;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using NotesBin.Interfaces;
@@ -28,9 +29,14 @@
 
         // GET api/Notes/5
         [HttpGet("{id}")]
-        public async Task<NotesModel> Get(long id)
+        public async Task<IActionResult> Get(long id)
         {
-            return await notesDataSource.GetAsync(id);
+            var result = await notesDataSource.GetAsync(id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound("The notes not found");
         }
 
         // POST api/Notes
