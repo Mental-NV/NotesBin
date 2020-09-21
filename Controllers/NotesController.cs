@@ -43,7 +43,7 @@
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] NotesModel entry)
         {
-
+            entry.Created = DateTime.UtcNow;
             long newId = await notesDataSource.AddAsync(entry);
             IActionResult result = Ok(new { Id = newId });
             return await Task.FromResult(result);

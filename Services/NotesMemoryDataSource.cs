@@ -7,14 +7,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class NotesDataSource : INotesDataSource
+    public class NotesMemoryDataSource : INotesDataSource
     {
         private readonly Dictionary<long, NotesModel> repository = new Dictionary<long, NotesModel>();
-
-        public NotesDataSource()
-        {
-            repository.Add(0, new NotesModel() { Id = 0, Title = "Title 0", Content = "Content 0", Created = DateTime.UtcNow });
-        }
 
         public async Task<IEnumerable<NotesModel>> GetAllAsync()
         {

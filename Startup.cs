@@ -24,7 +24,7 @@ namespace NotesBin
         {
 
             services.AddControllersWithViews();
-            services.AddSingleton<INotesDataSource, NotesDataSource>();
+            services.AddSingleton<INotesDataSource, NotesSqlDataSource>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
