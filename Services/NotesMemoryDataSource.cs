@@ -39,6 +39,14 @@
             {
                 throw new ArgumentException("Content musn't be empty", nameof(entry.Content));
             }
+            if (entry.Title.Length > 1024)
+            {
+                throw new ArgumentException("Title mustn't be greater than 1024 characters", nameof(entry.Title));
+            }
+            if (entry.Content.Length > 1024 * 1024)
+            {
+                throw new ArgumentException("Content mustn't be greater than 1Mb", nameof(entry.Content));
+            }
 
             entry.Id = repository.Count;
             entry.Created = DateTime.UtcNow;

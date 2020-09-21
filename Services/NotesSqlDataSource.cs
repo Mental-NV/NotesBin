@@ -41,6 +41,27 @@
 
         public async Task<long> AddAsync(NotesModel entry)
         {
+            if (entry == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (string.IsNullOrWhiteSpace(entry.Title))
+            {
+                throw new ArgumentException("Title musn't be empty", nameof(entry.Title));
+            }
+            if (string.IsNullOrWhiteSpace(entry.Content))
+            {
+                throw new ArgumentException("Content musn't be empty", nameof(entry.Content));
+            }
+            if (entry.Title.Length > 256)
+            {
+                throw new ArgumentException("Title mustn't be greater than 256 characters", nameof(entry.Title));
+            }
+            if (entry.Content.Length > 1024 * 1024)
+            {
+                throw new ArgumentException("Content mustn't be greater than 1Mb", nameof(entry.Content));
+            }
+
             using var connection = new SqliteConnection(connectionStringBuilder.ConnectionString);
             await connection.OpenAsync();
 
