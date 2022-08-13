@@ -12,7 +12,7 @@ const NavBar = () => {
                     <Typography>
                         <Link className='logolink navlink' component={RouterLink} to="/" >
                             <img src='logo32.png' alt='Notesbin' title='Notesbin' />
-                            <span>Notesbin v2</span>
+                            <span>Notesbin</span>
                         </Link>
                     </Typography>
                 </div>
